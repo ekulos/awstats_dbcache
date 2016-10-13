@@ -55,8 +55,6 @@ def awstat_cache(conn, awstat_site, awstat_location, month=None):
 
        toanalize_keys = [month]
 
-    print month, toanalize_keys
-
     for key in toanalize_keys:
        sider = parser[key]['SIDER']
        print key
