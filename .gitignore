@@ -1,0 +1,8 @@
+*.py[c,o]
+bin
+lib
+lib64
+include
+*.db
+pysqlite2-doc
+pip-selfcheck.json
