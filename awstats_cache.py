@@ -76,19 +76,19 @@ def awstat_cache(conn, awstat_site, awstat_location, month=None):
                 exit = int(stat['exit']) + int(row_stat['exit'])
                 pages = int(stat['pages']) + int(row_stat['pages'])
              else:
-                if int(str(last_entry)) > int(stat['entry'])):
+                if int(str(last_entry)) > int(stat['entry']):
                    entry = (int(str(last_entry)) - int(stat['entry'])) + int(row_stat['entry'])
                 else:
                    entry = (int(stat['entry']) - int(str(last_entry))) + int(row_stat['entry'])
-                if int(str(last_bandwidth)) > int(stat['bandwidth'])):
+                if int(str(last_bandwidth)) > int(stat['bandwidth']):
                    bandwidth = int(str(last_bandwidth)) - (int(stat['bandwidth'])) + int(row_stat['bandwidth'])
                 else:
                    bandwidth = (int(stat['bandwidth']) - int(str(last_bandwidth))) + int(row_stat['bandwidth'])
-                if int(str(last_exit)) > int(stat['exit'])):
+                if int(str(last_exit)) > int(stat['exit']):
                    exit = (int(str(last_exit)) - int(stat['exit'])) + int(row_stat['exit'])
                 else:
                    exit = (int(stat['exit']) - int(str(last_exit))) + int(row_stat['exit'])
-                if int(str(last_pages)) > int(stat['pages'])):
+                if int(str(last_pages)) > int(stat['pages']):
                    pages = (int(last_pages) - int(stat['pages'])) + int(row_stat['pages'])
                 else:
                    pages = (int(stat['pages']) - int(last_pages)) + int(row_stat['pages'])
