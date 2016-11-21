@@ -5,5 +5,5 @@ SCRIPT=$(readlink -f "$0")
 # Absolute path this script is in, thus /home/user/bin
 SCRIPTPATH=$(dirname "$SCRIPT")
 
-source $SCRIPTPATH/bin/activate
-python $SCRIPTPATH/awstats_cache.py $*
+source $SCRIPTPATH/bin/activate && \
+ python $SCRIPTPATH/awstats_cache.py $*
