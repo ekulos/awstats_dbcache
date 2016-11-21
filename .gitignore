@@ -3,6 +3,7 @@ bin
 lib
 lib64
 include
+local
 *.db
 pysqlite2-doc
 pip-selfcheck.json
