@@ -44,33 +44,37 @@ def awstat_cache(conn, awstat_site, awstat_location, month=None):
         - month is the month you want parse, ex. 072016
     """
     parser = ParsedStatistics(site=awstat_site, location=awstat_location)
-    toanalize_keys = parser.available
+    analize_keys = parser.available
     # sorting keys 012007 for 200701
-    toanalize_keys.sort(key=lambda x: (x[-4:], x[:2]))
+    analize_keys.sort(key=lambda x: (x[-4:], x[:2]))
     
     if month:
-       if month not in toanalize_keys:
+       if month not in analize_keys:
           print "%s not in awstats" % month
           return
 
-       toanalize_keys = [month]
+       analize_keys = [month]
 
-    for key in toanalize_keys:
+    for key in analize_keys:
        sider = parser[key]['SIDER']
        print key
        for url, stat in sider.items():
           quoted_url = urllib.quote(url)
           db_stat = conn.execute('SELECT * FROM statistics WHERE url="%s"' % quoted_url)
           rows_stat = db_stat.fetchall()
-          current_changes = "%s|%s|%s|%s|%s" % (key, stat['entry'], stat['bandwidth'], stat['exit'], stat['pages'])
+          try:
+              current_changes = "%s|%s|%s|%s|%s" % (key, stat['entry'], stat['bandwidth'], stat['exit'], stat['pages'])
+          except:
+              print 'Some errors occured analyzing %s' % stat
+              continue
           if len(rows_stat) > 0:
              row_stat = rows_stat[0]
              last_key, last_entry, last_bandwidth, last_exit, last_pages = row_stat['last_changes'].split('|')
              if key!=last_key:
-                entry = stat['entry'] + row_stat['entry']
-                bandwidth = stat['bandwidth'] + row_stat['bandwidth']
-                exit = stat['exit'] + row_stat['exit']
-                pages = stat['pages'] + row_stat['pages']
+                entry = int(stat['entry']) + int(row_stat['entry'])
+                bandwidth = int(stat['bandwidth']) + int(row_stat['bandwidth'])
+                exit = int(stat['exit']) + int(row_stat['exit'])
+                pages = int(stat['pages']) + int(row_stat['pages'])
              else:
                 entry = (int(stat['entry']) - int(str(last_entry))) + int(row_stat['entry'])
                 bandwidth = (int(stat['bandwidth']) - int(str(last_bandwidth))) + int(row_stat['bandwidth'])
